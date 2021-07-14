@@ -1,8 +1,32 @@
 import './css/styles.css';
-import fetchCountries from './fetchCountries';
-// import countryCard from './countryCard.hbs'
+import API from './fetchCountries';
+import countryCard from './countryCard.hbs';
 
 const DEBOUNCE_DELAY = 300;
+import * as _ from 'lodash';
+import getRefs from './getRefs';
 
-// const url = 'https://restcountries.eu/rest/v2/name/{name}';
+// import { formatDate } from 'tough-cookie';
 
+const refs = getRefs();
+
+refs.searchCountry.addEventListener('input', _.debounce(onSearch, DEBOUNCE_DELAY));
+
+function onSearch (e) {
+    e.preventDefault();
+    const searchLetter = refs.searchCountry.value;
+    console.log(searchLetter)
+    refs.countryCard.innerHTML = '';
+
+    API.fetchCountries(searchLetter)
+    .then(renderCountryCard)
+    .catch(error => console.log(error))
+    
+    ;
+}
+
+function renderCountryCard (country){
+    const markup = countryCard(country);
+    console.log(markup);
+    refs.countryCard.innerHTML = markup;
+}

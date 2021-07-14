@@ -14,7 +14,7 @@ refs.searchCountry.addEventListener('input', _.debounce(onSearch, DEBOUNCE_DELAY
 
 function onSearch (e) {
     e.preventDefault();
-    const searchLetter = refs.searchCountry.value;
+    const searchLetter = e.target.value;
     console.log(searchLetter)
     refs.countryCard.innerHTML = '';
 
@@ -28,5 +28,5 @@ function onSearch (e) {
 function renderCountryCard (country){
     const markup = countryCard(country);
     console.log(markup);
-    refs.countryCard.innerHTML = markup;
+    refs.countryCard.insertAdjacentHTML('beforeend', markup);
 }

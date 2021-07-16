@@ -1,10 +1,12 @@
-<div>
+<div class="header-country">
     <img src="{{flag}}" alt ="{{name}}" width = "60", height="40">
-        <h2>{{name}}</h2>
+        <h2 class="header-name">{{name}}</h2>
+</div>
+<div>
     <ul>
-        <li>Capital: {{capital}}</li>
-        <li>Population: {{population}}</li>
-        <li>Languages:
+        <li class="text-country"><b>Capital:</b> {{capital}}</li>
+        <li class="text-country"><b>Population:</b> {{population}}</li>
+        <li class="text-country"><b>Languages:</b>
            {{#each languages}}{{this.name}}
            {{/each}}
        </li>

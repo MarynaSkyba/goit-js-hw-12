@@ -1,32 +1,43 @@
 import './css/styles.css';
 import API from './fetchCountries';
 import countryCard from './countryCard.hbs';
-
-const DEBOUNCE_DELAY = 300;
-import * as _ from 'lodash';
+import renderCountryList from './renderCountryList.hbs'
 import getRefs from './getRefs';
+import Notiflix from "notiflix";
 
-// import { formatDate } from 'tough-cookie';
-
+const debounce = require('lodash.debounce');
+const DEBOUNCE_DELAY = 300;
 const refs = getRefs();
 
-refs.searchCountry.addEventListener('input', _.debounce(onSearch, DEBOUNCE_DELAY));
+refs.searchCountry.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
+
 
 function onSearch (e) {
-    e.preventDefault();
+    refs.countryInfo.innerHTML = '';
+    refs.searchCountry.innerHTML = '';
     const searchLetter = e.target.value;
     console.log(searchLetter)
-    refs.countryCard.innerHTML = '';
 
     API.fetchCountries(searchLetter)
     .then(renderCountryCard)
     .catch(error => console.log(error))
-    
-    ;
 }
 
-function renderCountryCard (country){
-    const markup = countryCard(country);
-    console.log(markup);
-    refs.countryCard.insertAdjacentHTML('beforeend', markup);
+function renderCountryCard (countries){
+      if (countries.length === 1) {
+        const markup = countries[0];
+        refs.countryInfo.insertAdjacentHTML('beforeend', countryCard(markup));
+      } 
+      else if (countries.length > 10) {
+        Notiflix.Notify.info('Too many matches found. Please enter a more specific name.')
+      }
+      else if (countries.status === 404) {
+        Notiflix.Notify.failure('Oops, there is no country with that name');
+      }
+      else if (countries.length >= 2 && countries.length <= 10) {
+          const markup = renderCountryList(countries);
+        refs.countryList.insertAdjacentHTML('afterend', markup);
+       
+      } 
+
 }

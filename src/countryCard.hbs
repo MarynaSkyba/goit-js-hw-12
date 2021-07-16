@@ -1,12 +1,15 @@
 <div>
+    <img src="{{flag}}" alt ="{{name}}" width = "60", height="40">
+        <h2>{{name}}</h2>
     <ul>
-        <img src="{{flag}}" alt ="{{name}}">
-        <li>Country: {{name}}</li>
         <li>Capital: {{capital}}</li>
         <li>Population: {{population}}</li>
-        {{#each languages}}
-        <li>Languages: {{name}}</li>
-            {{/each}}
-        </li>
+        </ul>
+    <ul>
+           Languages:
+           {{#each languages}}{{this.name}}
+           {{/each}}
+       
     </ul>
 </div>
+

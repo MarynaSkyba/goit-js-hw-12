@@ -1,6 +1,7 @@
 
 export default function getRefs() {
     return {
-    countryCard: document.querySelector('.country-info'),
+    countryInfo: document.querySelector('.country-info'),
+    countryList: document.querySelector('.country-list'),
     searchCountry: document.querySelector('#search-box'),
-  }  ;}
+  }  }
